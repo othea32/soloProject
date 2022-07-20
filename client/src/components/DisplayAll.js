@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useState}from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
-import { Button, Table } from "bootstrap";
+import { Button, Table } from "react-bootstrap";
 
 const DisplayAll = () => {
 

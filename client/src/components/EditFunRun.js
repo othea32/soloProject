@@ -5,28 +5,26 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 
 const EditFunRun = (props) => {
  const {id} = useParams();
- const [funrunName, setFunRunName] = useState("");
- const [funrunType, setFunRunType] = useState("");
- const [funrunDescription, setFunRunDescription] = useState("");
- const [funrunSkill1, setFunRunSkill1] = useState("");
- const [funrunSkill2, setFunRunSkill2] = useState("");
- const [funrunSkill3, setFunRunSkill3] = useState("");
+ const [funRunName, setFunRunName] = useState("");
+ const [funRunLocation, setFunRunLocation] = useState("");
+ const [funRunDistance, setFunRunDistance] = useState("");
+ const [funRunDescription, setFunRunDescription] = useState("");
+ 
  const [errors, setErrors] = useState({});
  const navigate = useNavigate();
- const [funrunNotFound, setFunRunNotFound] = useState("");
+ const [funRunNotFound, setFunRunNotFound] = useState("");
  console.log(id);
 
   useEffect(() => {
-   axios.get(`http://localhost:8000/api/funruns/${id}`)
+   axios.get(`http://localhost:8000/api/funRuns/${id}`)
    .then((res) => {
      console.log(res);
      console.log(res.data);
      setFunRunName(res.data.name);
-     setFunRunType(res.data.type);
+     setFunRunLocation(res.data.location);
+     setFunRunDistance(res.data.distance);
      setFunRunDescription(res.data.description);
-     setFunRunSkill1(res.data.skill1);
-     setFunRunSkill2(res.data.skill2);
-     setFunRunSkill3(res.data.skill3);
+     
      
    })
    .catch((err) => {
@@ -38,13 +36,12 @@ const EditFunRun = (props) => {
  const submitHandler = (e) => {
   e.preventDefault();
 
-  axios.put(`http://localhost:8000/api/funruns/${id}`, {
-   name: funrunName,
-   type: funrunType,
-   description: funrunDescription,
-   skill1: funrunSkill1,
-   skill2: funrunSkill2,
-   skill3: funrunSkill3,
+  axios.put(`http://localhost:8000/api/funRuns/${id}`, {
+   name: funRunName,
+   location: funRunLocation,
+   distance: funRunDistance,
+   description: funRunDescription,
+   
   })
   .then((res) => {
    console.log(res);
@@ -61,56 +58,44 @@ const EditFunRun = (props) => {
    <div className="row justify-content-center">
     <div className="col-4">
      <form onSubmit={submitHandler}>
-      {funrunNotFound ? <h2>{funrunNotFound}<Link to="/new">Click here to add funrun</Link></h2> :null}
+      {funRunNotFound ? <h2>{funRunNotFound}<Link to="/new">Click here to add funrun</Link></h2> :null}
       <Link to = "/">back to home</Link>
       <div className="form-group">
        <label htmlFor="name">FunRun Name:</label>
        <input 
         type="text" id="name" 
-        value={funrunName}
+        value={funRunName}
         onChange={(e) => setFunRunName(e.target.value)}
        />
        {errors.name ? <p>{errors.name.message}</p> : null}
-       <label htmlFor="type">FunRun Type:</label>
+
+       <label htmlFor="location">Location:</label>
        <input 
-        type="text" id="type"
+        type="text" id="location"
         className="form-control" 
-        onChange={(e) => setFunRunType(e.target.value)}
-        value={funrunType} 
+        onChange={(e) => setFunRunLocation(e.target.value)}
+        value={funRunLocation} 
        />
-       {errors.type ? <p>{errors.type.message}</p> : null}
-       <label htmlFor="description">FunRun Description:</label>
+       {errors.location ? <p>{errors.location.message}</p> : null}
+
+       <label htmlFor="distance">Distance:</label>
+       <input 
+        type="text" id="distance"
+        className="form-control" 
+        onChange={(e) => setFunRunDistance(e.target.value)}
+        value={funRunDistance} 
+       />
+       {errors.distance ? <p>{errors.distance.message}</p> : null}
+
+       <label htmlFor="description">Description:</label>
         <input 
          type="text" id="description" 
          className="form-control" 
          onChange={(e) => setFunRunDescription(e.target.value)}
-         value={funrunDescription} 
+         value={funRunDescription} 
        />
        {errors.description ? <p>{errors.description.message}</p> : null}
-       <div className=" form-group col-6">
-       <h4>Skills (Optional):</h4>
-       <label htmlFor="skill1">Skill 1:</label>
-        <input 
-         type="text" id="skill1"
-         className="form-control" 
-         onChange={(e) => setFunRunSkill1(e.target.value)}
-         value={funrunSkill1} 
-       />
-       <label htmlFor="skill2">Skill 2:</label>
-        <input 
-         type="text" id="skill2"
-         className="form-control" 
-         onChange={(e) => setFunRunSkill2(e.target.value)}
-         value={funrunSkill2} 
-       />
-       <label htmlFor="skill3">Skill 3:</label>
-        <input 
-         type="text" id="skill3"
-         className="form-control" 
-         onChange={(e) => setFunRunSkill3(e.target.value)}
-         value={funrunSkill3} 
-       />
-       </div>
+       
       </div>
       
       <button type="submit" className="btn btn-success">Edit FunRun</button>

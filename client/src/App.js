@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react'
-import { ReactDOM } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DisplayAll from './components/DisplayAll';
 import CreateFunRun from './components/CreateFunRun';

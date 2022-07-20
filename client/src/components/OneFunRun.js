@@ -12,7 +12,7 @@ const OneFunRun = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  axios.get(`http://localhost:8000/api/funruns/${id}`)
+  axios.get(`http://localhost:8000/api/funRuns/${id}`)
     .then((res) => {
       console.log(res);
       console.log(res.data);
@@ -22,7 +22,7 @@ const OneFunRun = (props) => {
   }, [id])
 
   const deleteFilter = () => {
-    axios.delete(`http://localhost:8000/api/funruns/${id}`)
+    axios.delete(`http://localhost:8000/api/funRuns/${id}`)
       .then((res) => {
         console.log(res.data);
         navigate("/")
@@ -33,13 +33,14 @@ const OneFunRun = (props) => {
 
   return ( 
   <div className="oneFunRun-component">
-   <Link to = {"/"}>back to home</Link>
-   <button onClick={deleteFilter} className="btn btn-danger">Adopt {oneFunRun.name}</button>
+   <Link to = {"/"}>Home</Link>
+   <button onClick={deleteFilter} className="btn btn-danger">Delete {oneFunRun.name}</button>
       
-    <h2>Details about: {oneFunRun.name}</h2>
-      <p>FunRun type: {oneFunRun.type}</p>
+    <h2>{oneFunRun.name} details: </h2>
+      <p>Location: {oneFunRun.location}</p>
+      <p>Distance {oneFunRun.distance}</p>
       <p>Description: {oneFunRun.description}</p>
-      <p>Skills: {oneFunRun.skill1}, {oneFunRun.skill2}, {oneFunRun.skill3}</p>
+      
       
   </div>
   );
